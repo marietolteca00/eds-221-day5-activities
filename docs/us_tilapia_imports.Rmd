@@ -1,0 +1,49 @@
+---
+title: "us_tilapia_imports"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(here)
+library(janitor)
+```
+#Read in the data as us_tilapia_imports
+```{r}
+us_tilapia_imports <- read_csv(here::here("data","us_tilapia_imports.csv"))
+```
+#Explore the data. What are the classes of the columns? Remember some tools we’ve used: summary, names, dim, skim, etc.
+
+```{r}
+skimr::skim(us_tilapia_imports)
+names(us_tilapia_imports)
+dim(us_tilapia_imports)
+summary(us_tilapia_imports)
+```
+#Use pivot_longer() to reshape the data into long format (currently, the variable “year” is spread across multiple columns). Remember to store the output so you will be able to use the reshaped data this creates.
+
+```{r}
+pivot_df <- us_tilapia_imports %>% 
+  pivot_longer(cols=-country, names_to = "year", values_to = "tilapia_imports" )
+```
+
+# Check the class of the year column. What is it, and why do you think that’s the case? Then, coerce the year column to numeric (e.g. using mutate() and as.numeric() in combination)
+```{r}
+mutate_pivot <- pivot_df %>% 
+  mutate(year=as.numeric(year))
+#check class(mutate_pivot$year) = numeric
+```
+
+
+# Create a ggplot line graph of total US tilapia imports for all years in yearly_tilapia_tot. Update axis labels (include units as necessary), then export your graph as a .png to figs.
+```{r}
+
+```
+
+Create a subset that only retains imports from Ecuador, Honduras, Costa Rica, and Mexico (you decide what to name this)
+
+```{r}
+subset_country_imports <- 
+  subset(mutate_pivot, country %in% c("Ecuador","Honduras", "Costa Rica", "Mexico"))
+```
+
